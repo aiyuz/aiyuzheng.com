@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import gallery from '../data/gallery.json';
+---
+<Base title="Photography & Art" description="Field photographs, travel photography, and drawings by Aiyu Zheng." image={gallery.sections[0].images[0].src}>
+  <div class="wrap">
+    <div class="page-title">
+      <h1>Photography &amp; Art</h1>
+      <p class="small" style="max-width: 46rem;">{gallery.notice}</p>
+    </div>
+
+    {gallery.sections.map((sec) => (
+      <section class="section">
+        <h2>{sec.title}</h2>
+        <p class="lede" style="margin-bottom: 1.6rem;">{sec.intro}</p>
+        <div class={`gallery ${sec.key}`}>
+          {sec.images.map((img) => (
+            <figure>
+              <a href={img.src} target="_blank" rel="noopener"><img src={img.src} alt={img.caption} loading="lazy" /></a>
+              {img.caption && <figcaption>{img.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>

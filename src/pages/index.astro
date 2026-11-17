@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Social from '../components/Social.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
+---
+<Base image="/uploads/2026/06/IMG_4708-scaled.jpg">
+  <div class="wrap">
+    <section class="split wide-media">
+      <img class="rounded" src="/uploads/2026/06/IMG_4708-scaled.jpg" alt="Aiyu Zheng in the field" style="aspect-ratio: 3 / 2; object-fit: cover; object-position: 32% 49%;" />
+      <div>
+        <p class="eyebrow">Ecological research and education</p>
+        <h1>Aiyu Zheng <span style="font-weight:400">鄭艾雨</span></h1>
+        <p>
+          Born and raised in Sichuan, China, I am a forest ecologist with backgrounds in climate science and
+          environmental education. I use mathematical models to understand how life histories of “grassy trees”
+          like bamboo and palms evolved and their ecological impact on forest communities under resource competition
+          and rapid climate change. I also lead the <a href="https://beyondtrees.github.io/" target="_blank" rel="noopener">Beyond Trees</a>
+          research network, an international community exploring the ecology and societal importance of forest growth
+          forms beyond trees.
+        </p>
+        <p>
+          Besides forests of plants, I am equally fascinated by forests of people. I use ecological theory to study how
+          individuals, infrastructure, and movement interact across space and time, generating emergent patterns that may
+          help us build more sustainable cities. As an ecological educator, I enjoy teaching learners of all ages and
+          inspiring ecological ways of seeing the world.
+        </p>
+        <p>
+          Outside academia, I enjoy writing. Click <a href="https://zine.la/@JeanxxxxXD/" target="_blank" rel="noopener">here</a> to visit my Chinese blog.
+        </p>
+        <Social />
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">Recent research highlights</p>
+      <div class="post-list" style="gap: 1.6rem;">
+        {posts.map((p) => (
+          <article class="post-card" style="grid-template-columns: 1fr 2fr; align-items: center;">
+            <a href={`/${p.id}/`} style="border:0"><img src={p.data.cover} alt="" loading="lazy" /></a>
+            <div>
+              <div class="post-date">{p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</div>
+              <h2><a href={`/${p.id}/`}>{p.data.title}</a></h2>
+              <p class="small">{p.data.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:1.5rem"><a class="btn" href="/research-highlights/">All research highlights</a></p>
+    </section>
+  </div>
+</Base>

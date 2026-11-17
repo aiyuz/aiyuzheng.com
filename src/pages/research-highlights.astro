@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="Research highlights" description="Short research stories from Aiyu Zheng: bamboo, grassy trees, forest dynamics, and the Beyond Trees network.">
+  <div class="wrap">
+    <div class="page-title">
+      <h1>Research highlights</h1>
+      <p class="lede">Short stories behind recent papers and projects.</p>
+    </div>
+    <div class="post-list">
+      {posts.map((p) => (
+        <article class="post-card">
+          <a href={`/${p.id}/`} style="border:0"><img src={p.data.cover} alt="" loading="lazy" /></a>
+          <div>
+            <div class="post-date">{p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+            <h2><a href={`/${p.id}/`}>{p.data.title}</a></h2>
+            <p class="small">{p.data.description}</p>
+            <a href={`/${p.id}/`}>Read more →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>
